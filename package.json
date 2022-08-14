@@ -24,7 +24,8 @@
     "react-native-web": "0.17.7",
     "react-redux": "^8.0.2",
     "styled-components": "^5.3.5",
-    "use-debounce": "^8.0.3"
+    "use-debounce": "^8.0.3",
+    "expo-updates": "~0.13.4"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

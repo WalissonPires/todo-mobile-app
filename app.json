@@ -1,6 +1,6 @@
 {
   "expo": {
-    "entryPoint": "./src/App.js",
+    "entryPoint": "./src/App.tsx",
     "name": "todo-app",
     "slug": "todo-app",
     "version": "1.0.0",
@@ -25,7 +25,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.gmail.walissonprm.todoappexpo"
     },
     "web": {
       "favicon": "./assets/favicon.png"
