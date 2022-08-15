@@ -37,7 +37,7 @@ class Logger implements ILogger {
 
         const levelText = LoggerLevel[level];
 
-        console.log(`${new Date().toISOString()} ${levelText} [${this.scope}] ${message}`);
+        console.log(`${new Date().toISOString()} [${levelText}] ${this.scope}: ${message}`);
     }
 
     public debug(message: string) {

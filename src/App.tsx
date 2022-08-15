@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { registerRootComponent } from 'expo';
@@ -8,6 +9,9 @@ import { Screens } from './screens';
 import { TodoDetails } from './screens/TodoDetails';
 import { store } from './store';
 import { colors } from './styles/colors';
+import { AppDataSource } from './data/datasource';
+import { LoggerFactory } from './common/logger';
+import { AppError } from './common/exceptions/app-error';
 
 const Stack = createNativeStackNavigator();
 const nativatorOptions: NativeStackNavigationOptions = {
@@ -32,5 +36,11 @@ function App() {
     )
 }
 
+AppDataSource.getInstance().initialize()
+    .catch(error => {
+
+        LoggerFactory.createLogger("App").error(error);
+        alert(AppError.from(error).message);
+    });
 
 export default registerRootComponent(App);

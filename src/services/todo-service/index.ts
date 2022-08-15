@@ -1,93 +1,60 @@
 import { ILogger, LoggerFactory } from "../../common/logger";
+import { AppDataSource } from "../../data/datasource";
+import { TodoRepository } from "../../data/repositories/todo-repository";
 import { NewTodo, Todo, UpdateTodo } from "./models";
 
 
 export class TodoService {
 
-    private static _data: Todo[] = [];
-
     private _logger: ILogger;
+    private _repository: TodoRepository;
 
     constructor() {
 
         this._logger = LoggerFactory.createLogger("TodoService");
+        this._repository = new TodoRepository();
     }
 
     public async getAll(): Promise<Todo[]> {
 
         this._logger.debug("Getting all todos");
-        return Promise.resolve(TodoService._data.map(item => ({ ...item })));
+
+        const data = await this._repository.getAll();
+        return data;
     }
 
     public async getById(todoId: number): Promise<Todo> {
 
         this._logger.debug(`Getting todo with id "${todoId}"`);
-        const todoFound = TodoService._data.find(t => t.id === todoId);
+
+        const todoFound = await this._repository.getById(todoId);
 
         if (todoFound)
-            return Promise.resolve({ ...todoFound });
+            return todoFound;
         else
-            return Promise.reject(new Error(`Todo with id ${todoId} not found`));
+            throw new Error(`Todo with id ${todoId} not found`);
     }
 
     public async create(todo: NewTodo): Promise<Todo> {
 
-        return new Promise((resolve, reject) => {
+        this._logger.debug(`Creating todo with title "${todo.title}"`);
 
-            setTimeout(() => {
-
-                this._logger.debug(`Creating todo with title "${todo.title}"`);
-
-                const todoCreated: Todo = {
-                    id: Date.now(),
-                    title: todo.title,
-                    completed: false
-                };
-
-                TodoService._data.push(todoCreated);
-
-                resolve(todoCreated);
-
-            }, 20);
-        });
+        const todoCreated = await this._repository.create({ ...todo, completed: false });
+        return todoCreated;
     }
 
     public async update(todo: UpdateTodo): Promise<Todo> {
 
-        return new Promise((resolve, reject) => {
+        this._logger.debug(`Updating todo with id "${todo.id}"`);
 
-            setTimeout(() => {
-
-                this._logger.debug(`Updating todo with id "${todo.id}"`);
-
-                const todoFoundIndex = TodoService._data.findIndex(t => t.id === todo.id);
-
-                if (todoFoundIndex >= 0) {
-
-                    const todoFound = TodoService._data[todoFoundIndex];
-                    const todoUpdated = {
-                        ...todoFound,
-                        title: todo.title ?? todoFound.title,
-                        completed: todo.completed ?? todoFound.completed
-                    };
-
-                    TodoService._data[todoFoundIndex] = todoUpdated;
-                    resolve(todoUpdated);
-                }
-                else
-                    reject(new Error(`Todo with id ${todo.id} not found`));
-
-            }, 500);
-        });
+        const todoUpdated = await this._repository.update(todo);
+        return todoUpdated;
     }
 
     public async delete(todoId: number): Promise<void> {
 
         this._logger.debug(`Deleting todo with id "${todoId}"`);
 
-        const todoIndex = TodoService._data.findIndex(t => t.id === todoId);
-        TodoService._data.splice(todoIndex, 1);
-
-        return Promise.resolve();
+        await this._repository.delete(todoId);
     }
 }
