@@ -6,7 +6,6 @@ export const styles = StyleSheet.create({
         width: '100%',
     },
     itemWrapper: {
-        paddingLeft: 20,
-        paddingRight: 20,
+
     }
 });

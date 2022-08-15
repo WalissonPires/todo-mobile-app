@@ -1,7 +1,9 @@
 import styled from "styled-components/native";
 import { colors } from "../../../styles/colors";
 
-export const TextField = styled.TextInput`
+export const TextField = styled.TextInput.attrs({
+    placeholderTextColor: colors.textMuted,
+})`
     height: 50px;
     width: 100%;
     background-color: #fff;

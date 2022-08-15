@@ -1,5 +1,6 @@
 import React from "react";
 import { TouchableOpacity, View, Text, StyleSheet } from "react-native";
+import { colors } from "../../styles/colors";
 import defaultShadows from "../../styles/shadow";
 
 export const CircleButton = ({ onPress, label }: CircleButtonProps) => {
@@ -11,12 +12,12 @@ export const CircleButton = ({ onPress, label }: CircleButtonProps) => {
             width: 50,
             height: 50,
             borderRadius: 25,
-            backgroundColor: "steelblue",
+            backgroundColor: colors.primary,
             borderWidth: 1,
-            borderColor: "#fff",
+            borderColor: colors.textInPrimary,
         },
         label: {
-            color: "#fff",
+            color: colors.textInPrimary,
         }
     });
 

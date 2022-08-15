@@ -9,12 +9,12 @@ export const useTodoDetails = (logger: ILogger) => {
 
     const handleShowNewTodoScreen = () => {
 
-        nav.navigate(Screens.TodoDetails, { todoId: undefined });
+        nav.navigate(Screens.Details, { todoId: undefined });
     };
 
     const handleItemSelected = (todoId: number) => {
 
-        nav.navigate(Screens.TodoDetails, { todoId: todoId });
+        nav.navigate(Screens.Details, { todoId: todoId });
     };
 
     return {
