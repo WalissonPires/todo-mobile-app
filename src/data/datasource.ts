@@ -1,6 +1,7 @@
 import { DataSource } from "typeorm";
 import { ILogger, LoggerFactory } from "../common/logger";
 import { Todo as TodoEntity } from "./entities/todo";
+import { Initial1660848055103 } from "./migrations/1660848055103-initial";
 
 export class AppDataSource {
     private static _instance: AppDataSource;
@@ -15,6 +16,7 @@ export class AppDataSource {
 
     private _dataSource: DataSource;
     private _initializing = false;
+    private _initialized = false;
     private _logger: ILogger;
 
     private constructor() {
@@ -24,16 +26,17 @@ export class AppDataSource {
         this._dataSource = new DataSource({
             type: 'expo',
             driver: require('expo-sqlite'),
-            database: 'todoapp2.sqlite',
+            database: 'todoapp-db.sqlite',
             entities: [ TodoEntity ],
             synchronize: false,
             migrationsRun: false,
+            migrations: [ Initial1660848055103 ]
         });
     }
 
     public isInitialized(): boolean {
 
-        return this._dataSource.isInitialized;
+        return this._initialized;
     }
 
     public async initialize(): Promise<void> {
@@ -45,6 +48,10 @@ export class AppDataSource {
         this._logger.debug('Initializing data');
         await this._dataSource.initialize();
         this._logger.debug('Data initialized');
+
+        await this._dataSource.runMigrations();
+
+        this._initialized = true;
     }
 
     public getDataSource(): DataSource {
