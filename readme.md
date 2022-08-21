@@ -3,11 +3,13 @@
 
 App to study the creation of mobile applications
 
+![App preview](todo-preview.gif)
+
 ## Generate database migrations
 
 ```bash
 
-# Create migration
+# Generate migration
 npm run migration:generate -- ./src/data/migrations/NewMigrationName
 
 # Add new migration to migrations list in src/data/datasource-common.ts
