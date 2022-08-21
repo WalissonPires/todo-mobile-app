@@ -3,13 +3,19 @@
 
 App to study the creation of mobile applications
 
-## Create migrations
+## Generate database migrations
 
 ```bash
-npx typeorm-ts-node-esm migration:create ./src/data/migrations/NewMigrationName
 
-## Write script with migration API
-## https://typeorm.io/migrations#using-migration-api-to-write-migrations
+# Create migration
+npm run migration:generate -- ./src/data/migrations/NewMigrationName
+
+# Add new migration to migrations list in src/data/datasource-common.ts
+
+# Apply migration in MigrationDatabase
+npm run migration:run
+
+# https://github.com/typeorm/typeorm/issues/9294
 ```
 
 ## Generate APK

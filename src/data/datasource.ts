@@ -1,7 +1,7 @@
 import { DataSource } from "typeorm";
 import { ILogger, LoggerFactory } from "../common/logger";
+import { getDataSourceCommonOptions } from "./datasource-common";
 import { Todo as TodoEntity } from "./entities/todo";
-import { Initial1660848055103 } from "./migrations/1660848055103-initial";
 
 export class AppDataSource {
     private static _instance: AppDataSource;
@@ -24,13 +24,12 @@ export class AppDataSource {
         this._logger = LoggerFactory.createLogger('AppDataSource');
 
         this._dataSource = new DataSource({
+            ...getDataSourceCommonOptions(),
             type: 'expo',
             driver: require('expo-sqlite'),
             database: 'todoapp-db.sqlite',
-            entities: [ TodoEntity ],
             synchronize: false,
             migrationsRun: false,
-            migrations: [ Initial1660848055103 ]
         });
     }
 

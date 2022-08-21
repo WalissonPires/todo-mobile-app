@@ -13,4 +13,7 @@ export class Todo implements IModel {
 
     @Column()
     completed: boolean;
+
+    @Column()
+    createdAt: Date;
 }
